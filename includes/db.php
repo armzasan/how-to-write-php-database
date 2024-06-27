@@ -4,10 +4,10 @@ $username = "root";
 $password = "";
 $dbname = "angkan_1";
 
-// Create connection
+// เชื่อมต่อ
 $conn = new mysqli($severance, $username, $password, $dbname);
 
-// Check connection
+// เช็คว่าต่อเข้ากับฐานข้อมูลได้มั้ย
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
