@@ -1,5 +1,5 @@
 <?php
-include 'includes/db.php';
+include 'db.php';
 $id = $_GET['id'];
 
 $sql = "DELETE FROM MyGuests WHERE id=$id";

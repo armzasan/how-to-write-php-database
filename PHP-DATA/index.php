@@ -1,5 +1,5 @@
 <?php
-include 'includes/db.php';
+include 'db.php';
 $sql = "SELECT * FROM MyGuests";
 $result = $conn->query($sql);
 ?>
@@ -49,7 +49,7 @@ $result = $conn->query($sql);
         </table>
     </div>
 </div>
-<script src="js/scripts.js"></script>
+<script src="scripts.js"></script>
 </body>
 </html>
 <?php $conn->close(); ?>
