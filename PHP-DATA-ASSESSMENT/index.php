@@ -9,28 +9,70 @@
             flex-direction: column;
             margin: 0;
             height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
         }
-        #editor, #question, #result {
+        #question, #editor, #result {
             width: 100%;
-            height: 33.33%;
-            padding: 10px;
+            padding: 20px;
             box-sizing: border-box;
+            background: #fff;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #question h3 {
+            margin: 0;
+            color: #333;
         }
         textarea {
             width: 100%;
-            height: 70%;
+            height: 200px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
         }
         iframe {
             width: 100%;
-            height: 70%;
+            height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         button {
-            width: 49%;
+            width: 48%;
             padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #0056b3;
         }
         .buttons {
             display: flex;
             justify-content: space-between;
+            margin-top: 10px;
+        }
+        #feedback {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        #solution-code {
+            display: none;
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: 'Courier New', Courier, monospace;
         }
     </style>
 </head>
@@ -48,7 +90,7 @@
     <div id="result">
         <iframe id="output"></iframe>
         <p id="feedback"></p>
-        <pre id="solution-code" style="display: none;"></pre>
+        <pre id="solution-code"></pre>
     </div>
     <script>
         let currentQuestionIndex = 0;
