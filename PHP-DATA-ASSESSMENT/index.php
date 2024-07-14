@@ -74,6 +74,11 @@
             margin-top: 10px;
             font-family: 'Courier New', Courier, monospace;
         }
+        #score-summary {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -91,10 +96,14 @@
         <iframe id="output"></iframe>
         <p id="feedback"></p>
         <pre id="solution-code"></pre>
+        <div id="score-summary" style="display: none;"></div>
     </div>
     <script>
         let currentQuestionIndex = 0;
         let questions = [];
+        let attempts = 0;
+        let score = 0;
+        let startTime, endTime;
 
         window.onload = function() {
             fetch('questions.php')
@@ -102,6 +111,7 @@
                 .then(data => {
                     questions = data;
                     loadQuestion();
+                    startTime = new Date(); // Start timer
                 });
         }
 
@@ -111,10 +121,10 @@
                 document.getElementById('feedback').innerText = '';
                 document.getElementById('code').value = '';
                 document.getElementById('solution-code').style.display = 'none';
+                attempts = 0;
             } else {
-                document.getElementById('question-text').innerText = 'คุณทำโจทย์ทั้งหมดเสร็จแล้ว!';
-                document.getElementById('code').disabled = true;
-                document.getElementById('feedback').innerText = '';
+                endTime = new Date();
+                showSummary();
             }
         }
 
@@ -135,13 +145,27 @@
 
         function checkAnswer(output) {
             const correctAnswer = questions[currentQuestionIndex].answer;
+            attempts++;
             if (output === correctAnswer) {
                 document.getElementById('feedback').innerText = 'ถูกต้อง! ไปยังข้อถัดไป';
+                updateScore();
                 currentQuestionIndex++;
                 loadQuestion();
             } else {
                 document.getElementById('feedback').innerText = 'ผิดพลาด! ลองอีกครั้ง';
             }
+        }
+
+        function updateScore() {
+            let questionScore = 100;
+            if (attempts > 2 && attempts <= 5) {
+                questionScore = 80;
+            } else if (attempts > 5 && attempts <= 10) {
+                questionScore = 60;
+            } else if (attempts > 10) {
+                questionScore = 40;
+            }
+            score += questionScore;
         }
 
         function showAnswer() {
@@ -150,6 +174,19 @@
                 document.getElementById('solution-code').innerText = questions[currentQuestionIndex].code;
                 document.getElementById('solution-code').style.display = 'block';
             }
+        }
+
+        function showSummary() {
+            const totalQuestions = questions.length;
+            const averageScore = score / totalQuestions;
+            const timeTaken = (endTime - startTime) / 1000; // in seconds
+
+            document.getElementById('question-text').innerText = 'คุณทำโจทย์ทั้งหมดเสร็จแล้ว!';
+            document.getElementById('code').disabled = true;
+            document.getElementById('score-summary').innerText = 
+                `คะแนนรวม: ${score} / ${totalQuestions * 100} (${averageScore}%)\n` +
+                `เวลาที่ใช้: ${timeTaken} วินาที`;
+            document.getElementById('score-summary').style.display = 'block';
         }
     </script>
 </body>
