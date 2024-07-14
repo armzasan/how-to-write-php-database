@@ -42,7 +42,7 @@
             border-radius: 5px;
         }
         button {
-            width: 48%;
+            width: 32%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -89,6 +89,7 @@
         <textarea id="code" placeholder="Write your PHP code here..."></textarea>
         <div class="buttons">
             <button onclick="runCode()">Run Code</button>
+            <button onclick="showHint()">Show Hint</button>
             <button onclick="showAnswer()">Show Answer</button>
         </div>
     </div>
@@ -166,6 +167,14 @@
                 questionScore = 40;
             }
             score += questionScore;
+        }
+
+        function showHint() {
+            if (currentQuestionIndex < questions.length) {
+                const code = questions[currentQuestionIndex].code;
+                const hint = code.substring(0, Math.floor(code.length / 2)) + '...';
+                document.getElementById('feedback').innerText = `Hint: ${hint}`;
+            }
         }
 
         function showAnswer() {
